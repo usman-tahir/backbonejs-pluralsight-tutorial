@@ -45,6 +45,7 @@
     }
   });
 
+  /*
   var myRectangle = new RectangleModel({
     width: 50,
     height: 50,
@@ -54,11 +55,29 @@
     },
     color: 'red'
   });
+  */
+  var myRectangleModels = [
+    new RectangleModel({
+      width: 50,
+      height: 50,
+      position: {
+        x: 300,
+        y: 150
+      },
+      color: 'red'
+    }),
+    new RectangleModel({
+      width: 100,
+      height: 40,
+      position: {
+        x: 500,
+        y: 300
+      },
+      color: 'blue'
+    })
+  ];
 
-  var myView = new RectangleView({
-    model: myRectangle
+  _(myRectangleModels).each(function (model) {
+    $('div#canvas').append(new RectangleView({model: model}).render().el);
   });
-
-  $('div#canvas').append(myView.render().el);
-  console.log('The RectangleModel should have been rendered.');
 }());
