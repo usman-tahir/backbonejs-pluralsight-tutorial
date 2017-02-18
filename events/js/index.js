@@ -20,4 +20,7 @@
   });
 
   newFord.set('year', '2016');
+  var attributes = newFord.toJSON();
+  console.log(attributes);
+  console.log(JSON.stringify(attributes)); // Serialized JSON string representation
 }());
