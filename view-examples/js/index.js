@@ -2,22 +2,26 @@
 
   'use strict';
 
-  var RefreshingView = Backbone.View.extend({
-    initialize: function () {
-      this.model.on('change', function () {
-        console.log('the view was refreshed');
-        this.render();
-      }, this);
+  var FormView = Backbone.View.extend({
+    events: {
+      'click .clickable': 'handleClick',
+      'change': 'handleChange'
     },
     render: function () {
-      this.$el.html(this.model.get('text'));
+      this.$el.html(
+        '<input type="text" class="clickable" placeholder="clickable"> \
+        <br><input type="text">'
+      );
+      return this;
+    },
+    handleClick: function () {
+      console.log('handleClick() called');
+    },
+    handleChange: function () {
+      console.log('handleChange() called');
     }
   });
 
-  var model = new Backbone.Model({text: new Date().toString()});
-  var view = new RefreshingView(({model: model, el: 'body'}));
-
-  setInterval(function () {
-    model.set({text: new Date().toString()});
-  }, 1000);
+  var formView = new FormView();
+  $('body').append(formView.render().el);
 }());
