@@ -2,19 +2,22 @@
 
   'use strict';
 
-  var MyModel = new Backbone.Model();
-  MyModel.set('content', 'this is some content');
-
-  var MyView = new Backbone.View({
-    model: MyModel,
-    className: 'model-object'
+  var RefreshingView = Backbone.View.extend({
+    initialize: function () {
+      this.model.on('change', function () {
+        console.log('the view was refreshed');
+        this.render();
+      }, this);
+    },
+    render: function () {
+      this.$el.html(this.model.get('text'));
+    }
   });
 
-  $('body').prepend(MyView.el);
-  console.log('prepended to body');
+  var model = new Backbone.Model({text: new Date().toString()});
+  var view = new RefreshingView(({model: model, el: 'body'}));
 
-  var ParagraphView = new Backbone.View({
-    el: 'body'
-  });
-  console.log(ParagraphView.el);
+  setInterval(function () {
+    model.set({text: new Date().toString()});
+  }, 1000);
 }());
